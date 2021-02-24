@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Sign Up</h1>
+
+<form action="/signup" method="POST">
+    {{ form.csrf_token }}
+    <fieldset>
+        <legend>Enter your credentials</legend>
+
+        {{ form.email.label }}
+        {{ form.email }}
+        <ul>
+            {% for error in form.email.errors %}
+            <li class="error">{{ error }}</li>
+            {% endfor %}
+        </ul>
+
+        {{ form.username.label }}
+        {{ form.username(class_="btn btn-primary")}}
+        <ul>
+            {% for error in form.username.errors %}
+            <li class="error">{{ error }}</li>
+            {% endfor %}
+        </ul>
+
+        {{ form.password.label }}
+        {{ form.password }}
+        <ul>
+            {% for error in form.password.errors %}
+            <li class="error">{{ error }}</li>
+            {% endfor %}
+        </ul>
+
+        {{ form.submit }}
+    </fieldset>
+</form>
+<p>Already Have an Account? <a href="{{url_for('auth.login')}}">Login</a></p>
+
+{% endblock %}
