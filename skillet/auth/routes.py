@@ -8,7 +8,7 @@ from skillet import bcrypt
 # Import app and db from events_app package so that we can run app
 from skillet import app, db
 
-auth = Blueprint("auth", __name__)
+auth = Blueprint("auth", __name__, template_folder='templates')
 
 ##########################################
 #           Auth Routes                  #
@@ -17,7 +17,6 @@ auth = Blueprint("auth", __name__)
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
-    print('in signup')
     form = SignUpForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(
@@ -29,7 +28,6 @@ def signup():
         db.session.add(user)
         db.session.commit()
         flash('Account Created.')
-        print('created')
         return redirect(url_for('auth.login'))
     print(form.errors)
     return render_template('signup.html', form=form)

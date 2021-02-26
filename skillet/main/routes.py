@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 
-main = Blueprint("main", __name__)
+main = Blueprint("main", __name__, template_folder='templates')
 
 ##########################################
 #           Main Routes                  #
