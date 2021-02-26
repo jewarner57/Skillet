@@ -26,9 +26,6 @@ class Meal(db.Model):
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     created_by = db.relationship('User')
 
-    # recipes = db.relationship(
-    #     'Recipe', secondary="meal_recipes", back_populates="meals")
-
     recipes = db.relationship(
         'Recipe', secondary="meal_recipes", back_populates='meals')
 
@@ -43,9 +40,6 @@ class Recipe(db.Model):
 
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     created_by = db.relationship('User')
-
-    # meals = db.relationship(
-    #     'Meal', secondary="meal_recipes", back_populates="recipes")
 
     meals = db.relationship(
         'Meal', secondary='meal_recipes', back_populates="recipes")

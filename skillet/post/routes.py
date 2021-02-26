@@ -45,7 +45,7 @@ def edit_recipe(id):
     recipe = Recipe.query.get(id)
     form = RecipeForm(obj=recipe)
 
-    if form.validate_on_submit():
+    if form.validate_on_submit() and current_user.id == recipe.created_by_id:
 
         recipe.name = form.name.data
         recipe.description = form.description.data
