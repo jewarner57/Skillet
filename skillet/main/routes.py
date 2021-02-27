@@ -9,5 +9,5 @@ main = Blueprint("main", __name__, template_folder='templates')
 
 @main.route('/')
 def home():
-    """Gets the homepage."""
+    """Displays the homepage."""
     return render_template('home.html')

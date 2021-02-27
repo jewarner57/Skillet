@@ -19,8 +19,8 @@ login_manager.init_app(app)
 from .models import User
 
 @login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
+def load_user(id):
+    return User.query.get(id)
 
 
 bcrypt = Bcrypt(app)
