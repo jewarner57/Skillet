@@ -4,7 +4,7 @@
 <section class="user-info-section ps-5 mb-5">
     <p class="fs-2 my-2">{{user.username.title()}}'s Profile</p>
     {% if current_user.id == user.id%}
-    <p>Last Active: {{user.last_active}}</p>
+    <p>Last Active: {{user.last_active.strftime("%m/%d/%Y, %H:%M:%S")}}</p>
     <p class="p-0 m-0 fs-5">Email: {{user.email}}</p>
     <small class="text p-0 m-0">email not visible to other users</small>
     {% endif %}
@@ -18,6 +18,28 @@
             <a href="/create_meal">
                 <div class="btn btn-primary col"> Create Meal </div>
             </a>
+            <div class="row mt-4">
+                {% for meal in user.meals %}
+                <div class="card m-3 pt-2" style="width: 18rem;">
+                    <img src="{{meal.img_url}}" class="card-img-top" alt="{{meal.name}}">
+                    <div class="card-body">
+                        <p class="fs-5">{{meal.name.title()}}</p>
+                        <p class="card-text">{{meal.description}}</p>
+                        <p class="card-text">{{meal.date_prepared.strftime("%m/%d/%Y, %H:%M:%S")}}</p>
+
+                        {% if current_user.id == meal.created_by_id %}
+                        <div>
+                            <a href="/update_meal/{{meal.id}}">
+                                <div class="btn btn-warning">Edit Meal</div>
+                            </a>
+                        </div>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </section>

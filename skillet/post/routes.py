@@ -14,12 +14,12 @@ post = Blueprint("post",
 ##########################################
 
 
-@post.route('/create_recipe')
+@post.route('/create_recipe', methods=["GET", "POST"])
 @login_required
 def create_recipe():
-    """Gets the create_recipe page"""
-
+    """Gets the create_meal page"""
     form = RecipeForm()
+    user = current_user
     if form.validate_on_submit():
 
         update_user_activity(current_user)
@@ -28,10 +28,13 @@ def create_recipe():
             name=form.name.data,
             description=form.description.data,
             ingredients=form.ingredients.data,
-            process=form.process.data
+            instructions=form.instructions.data
         )
 
+        user.recipes.append(recipe)
+
         db.session.add(recipe)
+        db.session.add(user)
         db.session.commit()
 
         flash('Recipe Created.')
@@ -56,7 +59,7 @@ def edit_recipe(id):
         recipe.name = form.name.data
         recipe.description = form.description.data
         recipe.ingredients = form.ingredients.data
-        recipe.process = form.process.data
+        recipe.instructions = form.instructions.data
 
         db.session.add(recipe)
         db.session.commit()
@@ -81,11 +84,12 @@ def view_recipe(id):
 #           Meal Routes                  #
 ##########################################
 
-@post.route('/create_meal')
+@post.route('/create_meal', methods=["GET", "POST"])
 @login_required
 def create_meal():
     """Gets the create_meal page"""
     form = MealForm()
+    user = current_user
     if form.validate_on_submit():
 
         update_user_activity(current_user)
@@ -93,11 +97,14 @@ def create_meal():
         meal = Meal(
             name=form.name.data,
             description=form.description.data,
-            image_url=form.image_url.data,
+            img_url=form.image_url.data,
             date_prepared=datetime.now()
         )
 
+        user.meals.append(meal)
+
         db.session.add(meal)
+        db.session.add(user)
         db.session.commit()
 
         flash('Meal Created.')

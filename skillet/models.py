@@ -14,6 +14,9 @@ class User(UserMixin, db.Model):
     date_created = db.Column(db.DateTime, nullable=False)
     last_active = db.Column(db.DateTime, nullable=False)
 
+    recipes = db.relationship('Recipe', backref='user')
+    meals = db.relationship('Meal', backref='user')
+
 
 class Meal(db.Model):
     __tablename__ = 'meal'
@@ -24,7 +27,6 @@ class Meal(db.Model):
     img_url = db.Column(db.String(100), nullable=False)
 
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    created_by = db.relationship('User')
 
     recipes = db.relationship(
         'Recipe', secondary="meal_recipes", back_populates='meals')
@@ -36,13 +38,15 @@ class Recipe(db.Model):
     name = db.Column(db.String(80), nullable=False)
     description = db.Column(db.String(300), nullable=False)
     ingredients = db.Column(db.String(300), nullable=False)
-    process = db.Column(db.String(300), nullable=False)
+    instructions = db.Column(db.String(300), nullable=False)
 
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    created_by = db.relationship('User')
 
     meals = db.relationship(
         'Meal', secondary='meal_recipes', back_populates="recipes")
+
+    def __repr__(self):
+        return self.name.title()
 
 
 meal_recipes_table = db.Table('meal_recipes',

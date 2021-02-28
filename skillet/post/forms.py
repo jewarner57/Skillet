@@ -24,11 +24,14 @@ class MealForm(FlaskForm):
 class RecipeForm(FlaskForm):
     """Form for creating a new recipe"""
     name = StringField('Name', validators=[Length(min=3, max=50)])
+
     description = TextAreaField(
         'Description', validators=[DataRequired(), Length(min=1, max=300)])
+
+    instructions = TextAreaField(
+        'Instructions', validators=[DataRequired(), Length(min=1, max=300)])
+
     ingredients = TextAreaField(
         'Ingredients', validators=[DataRequired(), Length(min=1, max=300)])
-    process = TextAreaField(
-        'Process', validators=[DataRequired(), Length(min=1, max=300)])
 
     submit = SubmitField('Submit')

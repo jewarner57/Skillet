@@ -3,7 +3,7 @@ from datetime import date, datetime
 
 from wtforms.validators import Email
 from flask_login import login_required, login_user, logout_user
-from skillet.models import User
+from skillet.models import User, Meal, Recipe
 from skillet.auth.forms import SignUpForm, LoginForm
 from skillet import bcrypt
 from datetime import datetime

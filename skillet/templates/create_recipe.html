@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section class="form-section">
+    <div class="form-container col-10 col-md-8 col-lg-6">
+        <p class="fs-3 text-center">Create a New Recipe</p>
+        <form action="{{url_for('post.create_recipe')}}" method="POST">
+            {{ form.csrf_token }}
+            <fieldset>
+                {% for field in form %}
+
+                {% if field != form.csrf_token and field != form.submit%}
+
+                {{field.label}}:
+                {{field(class_="form-control mb-4 bg-light")}}
+
+                {% endif %}
+
+                {% endfor %}
+
+                {{form.submit(class_="btn btn-primary px-5 col-6 offset-3")}}
+            </fieldset>
+        </form>
+    </div>
+</section>
+{% endblock content %}
