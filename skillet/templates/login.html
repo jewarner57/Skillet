@@ -1,32 +1,53 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Log In</h1>
-<form action="{{ url_for('auth.login', next=request.args.get('next')) }}" method="POST">
-    {{ form.csrf_token }}
-    <fieldset>
-        <legend>Enter your credentials</legend>
+<section class="auth-section">
 
-        {{ form.email.label }}
-        {{ form.email }}
-        <ul>
-            {% for error in form.email.errors %}
-            <li class="error">{{ error }}</li>
-            {% endfor %}
-        </ul>
+    <div class="auth-container">
+        <p class="fs-3 text-center">Login</p>
+        <form action="{{ url_for('auth.login', next=request.args.get('next')) }}" method="POST">
+            {{ form.csrf_token }}
+            <fieldset>
 
-        {{ form.password.label }}
-        {{ form.password }}
-        <ul>
-            {% for error in form.password.errors %}
-            <li class="error">{{ error }}</li>
-            {% endfor %}
-        </ul>
+                <div class="input-wrapper">
+                    {{ form.email.label(class_="form-label") }}
+                    {{ form.email(class_="form-control") }}
+                </div>
+                <ul>
+                    {% for error in form.email.errors %}
+                    <li class="error">{{ error }}</li>
+                    {% endfor %}
+                </ul>
 
-        {{ form.submit }}
-    </fieldset>
-</form>
-<p>Don't Have an Account? <a href="{{url_for('auth.signup')}}">Signup</a></p>
+                <div class="input-wrapper">
+                    {{ form.password.label(class_="form-label") }}
+                    {{ form.password(class_="form-control") }}
+                </div>
+                <ul>
+                    {% for error in form.password.errors %}
+                    <li class="error">{{ error }}</li>
+                    {% endfor %}
+                </ul>
 
+                <div class="input-wrapper">
+                    {{ form.submit(class_="btn btn-primary") }}
+                </div>
 
-{% endblock %}
+                {% for message in get_flashed_messages() %}
+                <div>
+                    <p class="error">{{ message }}</p>
+                </div>
+                {% endfor %}
+
+            </fieldset>
+        </form>
+    </div>
+    <p>Don't Have an Account? <a href="{{url_for('auth.signup')}}">Signup</a></p>
+
+</section>
+
+{% endblock content %}
+
+{% block scripts %}
+
+{% endblock scripts %}
