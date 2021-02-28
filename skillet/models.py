@@ -12,7 +12,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(200), nullable=False)
 
     date_created = db.Column(db.DateTime, nullable=False)
-    last_logged_in = db.Column(db.DateTime, nullable=False)
+    last_active = db.Column(db.DateTime, nullable=False)
 
 
 class Meal(db.Model):

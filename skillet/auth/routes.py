@@ -29,7 +29,7 @@ def signup():
             email=form.email.data,
             password=hashed_password,
             date_created=datetime.now(),
-            last_logged_in=datetime.now()
+            last_active=datetime.now()
         )
 
         db.session.add(user)
@@ -53,8 +53,8 @@ def login():
 
             login_user(user, remember=True)
 
-            # Update the date of last time user logged in
-            user.last_logged_in = datetime.now()
+            # Update to show the user is active
+            user.last_active = datetime.now()
             db.session.add(user)
             db.session.commit()
 

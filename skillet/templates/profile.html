@@ -1,8 +1,36 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Home</h1>
-<p>{{user.username}}'s Profile</p>
-<p>{{user.email}}</p>
+<section class="user-info-section ps-5 mb-5">
+    <p class="fs-2 my-2">{{user.username.title()}}'s Profile</p>
+    {% if current_user.id == user.id%}
+    <p>Last Active: {{user.last_active}}</p>
+    <p class="p-0 m-0 fs-5">Email: {{user.email}}</p>
+    <small class="text p-0 m-0">email not visible to other users</small>
+    {% endif %}
+
+</section>
+
+<section class="user-meals-section ps-5 my-5">
+    <div>
+        <p class="fs-2">Meals:</p>
+        <div>
+            <a href="/create_meal">
+                <div class="btn btn-primary col"> Create Meal </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="user-recipes-section ps-5 my-5">
+    <div>
+        <p class="fs-2">Recipes:</p>
+        <div>
+            <a href="/create_recipe">
+                <div class="btn btn-primary col"> Create Recipe </div>
+            </a>
+        </div>
+    </div>
+</section>
 
 {% endblock content %}

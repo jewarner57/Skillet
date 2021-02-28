@@ -4,8 +4,9 @@ from flask import Blueprint, request, render_template, redirect, url_for, flash
 from skillet.post.forms import MealForm, RecipeForm
 from skillet.models import Meal, Recipe
 from flask_login import current_user, login_required
+from skillet.post.utils import update_user_activity
 
-post = Blueprint("from skillet.models import Userpost",
+post = Blueprint("post",
                  __name__, template_folder='templates')
 
 ##########################################
@@ -20,6 +21,8 @@ def create_recipe():
 
     form = RecipeForm()
     if form.validate_on_submit():
+
+        update_user_activity(current_user)
 
         recipe = Recipe(
             name=form.name.data,
@@ -47,6 +50,8 @@ def edit_recipe(id):
     form = RecipeForm(obj=recipe)
 
     if form.validate_on_submit() and current_user.id == recipe.created_by_id:
+
+        update_user_activity(current_user)
 
         recipe.name = form.name.data
         recipe.description = form.description.data
@@ -83,6 +88,8 @@ def create_meal():
     form = MealForm()
     if form.validate_on_submit():
 
+        update_user_activity(current_user)
+
         meal = Meal(
             name=form.name.data,
             description=form.description.data,
@@ -110,6 +117,8 @@ def edit_meal(id):
 
     if form.validate_on_submit() and current_user.id == meal.created_by_id:
 
+        update_user_activity(current_user)
+
         meal.name = form.name.data
         meal.description = form.description.data
         meal.image_url = form.image_url.data,
@@ -118,8 +127,8 @@ def edit_meal(id):
         db.session.add(meal)
         db.session.commit()
 
-        flash('Meal Updated.')
-        return redirect(url_for('auth.profile', id=current_user.id))
+    flash('Meal Updated.')
+    return redirect(url_for('auth.profile', id=current_user.id))
 
     print(form.errors)
 
@@ -133,6 +142,8 @@ def delete_meal(id):
     meal = Meal.query.get(id)
 
     if current_user.id == meal.created_by_id:
+        update_user_activity(current_user)
+
         db.session.delete(meal)
         db.session.commit()
         flash("Meal Deleted")

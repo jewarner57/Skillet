@@ -28,9 +28,11 @@ bcrypt = Bcrypt(app)
 # blueprints
 from skillet.main.routes import main
 from skillet.auth.routes import auth
+from skillet.post.routes import post
 
 app.register_blueprint(main)
 app.register_blueprint(auth)
+app.register_blueprint(post)
 
 with app.app_context():
     db.create_all()
