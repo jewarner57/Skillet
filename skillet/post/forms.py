@@ -29,9 +29,9 @@ class RecipeForm(FlaskForm):
         'Description', validators=[DataRequired(), Length(min=1, max=300)])
 
     instructions = TextAreaField(
-        'Instructions', validators=[DataRequired(), Length(min=30, max=300)])
+        'Instructions', validators=[DataRequired(), Length(min=3, max=300)])
 
     ingredients = TextAreaField(
-        'Ingredients', validators=[DataRequired(), Length(min=30, max=300)])
+        'Ingredients', validators=[DataRequired(), Length(min=3, max=300)])
 
     submit = SubmitField('Submit')

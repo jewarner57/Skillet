@@ -13,6 +13,11 @@
 
                 {{field.label}}:
                 {{field(class_="form-control mb-4 bg-light")}}
+                <ul>
+                    {% for error in field.errors %}
+                    <li class="error">{{ error }}</li>
+                    {% endfor %}
+                </ul>
 
                 {% endif %}
 

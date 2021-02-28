@@ -33,3 +33,8 @@
 .fs-6 {
     font-size: 0.2em;
 }
+
+.test {
+    color: green;
+    background-color:rgb(238, 77, 77);
+}

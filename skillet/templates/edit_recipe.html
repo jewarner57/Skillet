@@ -3,8 +3,8 @@
 
 <section class="form-section">
     <div class="form-container col-10 col-md-8 col-lg-6">
-        <p class="fs-3 text-center">Create a New Recipe</p>
-        <form action="{{url_for('post.create_recipe')}}" method="POST">
+        <p class="fs-3 text-center">Edit Recipe</p>
+        <form action="{{url_for('post.edit_recipe', id=recipe.id)}}" method="POST">
             {{ form.csrf_token }}
             <fieldset>
                 {% for field in form %}

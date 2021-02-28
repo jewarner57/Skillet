@@ -45,11 +45,13 @@ def create_recipe():
     return render_template('create_recipe.html', form=form)
 
 
-@post.route('/edit_recipe/<id>')
+@post.route('/edit_recipe/<id>', methods=["GET", "POST"])
 @login_required
 def edit_recipe(id):
     """Gets the edit_recipe page"""
     recipe = Recipe.query.get(id)
+    print(recipe)
+    print("what the fuck")
     form = RecipeForm(obj=recipe)
 
     if form.validate_on_submit() and current_user.id == recipe.created_by_id:
@@ -61,7 +63,6 @@ def edit_recipe(id):
         recipe.ingredients = form.ingredients.data
         recipe.instructions = form.instructions.data
 
-        db.session.add(recipe)
         db.session.commit()
 
         flash('Recipe Updated.')
@@ -115,7 +116,7 @@ def create_meal():
     return render_template('create_meal.html', form=form)
 
 
-@post.route('/edit_meal/<id>')
+@post.route('/edit_meal/<id>', methods=["GET", "POST"])
 @login_required
 def edit_meal(id):
     """Gets the edit_meal page"""
@@ -131,11 +132,10 @@ def edit_meal(id):
         meal.image_url = form.image_url.data,
         meal.date_prepared = datetime.now()
 
-        db.session.add(meal)
         db.session.commit()
 
-    flash('Meal Updated.')
-    return redirect(url_for('auth.profile', id=current_user.id))
+        flash('Meal Updated.')
+        return redirect(url_for('auth.profile', id=current_user.id))
 
     print(form.errors)
 
