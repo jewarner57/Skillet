@@ -24,7 +24,7 @@ class Meal(db.Model):
     name = db.Column(db.String(80), nullable=False)
     description = db.Column(db.String(100), nullable=True)
     date_prepared = db.Column(db.DateTime, nullable=False)
-    img_url = db.Column(db.String(100), nullable=False)
+    img_url = db.Column(db.String(150), nullable=False)
 
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 

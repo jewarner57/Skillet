@@ -13,7 +13,7 @@ from datetime import datetime
 class MealForm(FlaskForm):
     """Form for creating a new meal"""
     name = StringField('Name', validators=[Length(min=3, max=50)])
-    image_url = StringField('Image Url', validators=[DataRequired(), URL()])
+    img_url = StringField('Image Url', validators=[DataRequired(), URL()])
     description = StringField('Description', validators=[DataRequired()])
     recipes = QuerySelectMultipleField(
         'Recipe', query_factory=lambda: Recipe.query)

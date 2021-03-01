@@ -3,8 +3,8 @@
 
 <section class="user-info-section ps-5 mb-5">
     <p class="fs-2 my-2">{{user.username.title()}}'s Profile</p>
-    {% if current_user.id == user.id%}
     <p>Last Active: {{user.last_active.strftime("%m/%d/%Y, %H:%M:%S")}}</p>
+    {% if current_user.id == user.id%}
     <p class="p-0 m-0 fs-5">Email: {{user.email}}</p>
     <small class="text p-0 m-0">email not visible to other users</small>
     {% endif %}
@@ -57,9 +57,9 @@
             <div class="card border-dark mb-3 mx-3" style="max-width: 18rem;">
                 <div class="card-header">{{recipe.name}}</div>
                 <div class="card-body text-dark">
-                    <p class="card-text fs-4">{{recipe.description}}</p>
-                    <p class="card-text">{{recipe.instructions[0:30]}}</p>
-                    <p class="card-text">{{recipe.ingredients[0:30]}}</p>
+                    <p class="card-text">{{recipe.description}}</p>
+                    <p class="card-text">{{recipe.instructions[0:80]}}...r</p>
+                    <p class="card-text">{{recipe.ingredients[0:80]}}...</p>
                 </div>
 
                 {% if current_user.id == recipe.created_by_id %}

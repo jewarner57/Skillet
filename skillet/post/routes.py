@@ -98,7 +98,7 @@ def create_meal():
         meal = Meal(
             name=form.name.data,
             description=form.description.data,
-            img_url=form.image_url.data,
+            img_url=form.img_url.data,
             date_prepared=datetime.now()
         )
 
@@ -129,7 +129,7 @@ def edit_meal(id):
 
         meal.name = form.name.data
         meal.description = form.description.data
-        meal.image_url = form.image_url.data,
+        meal.img_url = str(form.img_url.data)
         meal.date_prepared = datetime.now()
 
         db.session.commit()
