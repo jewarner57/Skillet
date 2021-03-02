@@ -11,3 +11,6 @@
 * install dependencies: ```pip install -r requirements.txt```
 * then start the project: ```python3 app.py```
 * finally, visit localhost:5000 to view the project.
+
+### How to run tests?
+* Run: ```python -m unittest discover```

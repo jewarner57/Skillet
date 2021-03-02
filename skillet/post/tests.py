@@ -56,70 +56,107 @@ def logout(client):
 
 
 #################################################
-# Tests
+# Post Tests
 #################################################
 
 
-# class MainTests(unittest.TestCase):
-#     def setUp(self):
-#         """Executed prior to each test."""
-#         app.config['TESTING'] = True
-#         app.config['WTF_CSRF_ENABLED'] = False
-#         app.config['DEBUG'] = False
-#         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
-#         self.app = app.test_client()
-#         db.drop_all()
-#         db.create_all()
+class MainTests(TestCase):
+    def setUp(self):
+        """Executed prior to each test."""
+        app.config['TESTING'] = True
+        app.config['WTF_CSRF_ENABLED'] = False
+        app.config['DEBUG'] = False
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+        self.app = app.test_client()
+        db.drop_all()
+        db.create_all()
 
-#     def test_homepage_logged_out(self):
-#         """Test that the books show up on the homepage."""
+    def test_create_meal(self):
+        """Test creating a meal."""
+        # Set up
+        create_meals()
+        create_user()
+        login(self.app, 'testing_user@mail.io', 'password')
+
+        # Make POST request with data
+        post_data = {
+            'name': 'This is a test meal',
+            'description': 'This is a test description',
+            'date_prepared': datetime.now(),
+            'img_url': 'https://www.img_url.com/image'
+        }
+        self.app.post('/create_meal', data=post_data)
+
+        # Make sure the meal was created correctly
+        created_meal = Meal.query.filter_by(name='This is a test meal').one()
+        self.assertIsNotNone(created_meal)
+        self.assertEqual(created_meal.description,
+                         'This is a test description')
+
+#     def test_create_book_logged_out(self):
+#         """
+#         Test that the user is redirected when trying to access the create book
+#         route if not logged in.
+#         """
 #         # Set up
 #         create_books()
 #         create_user()
 
-#         # Make a GET request
-#         response = self.app.get('/', follow_redirects=True)
-#         self.assertEqual(response.status_code, 200)
+#         # Make GET request
+#         response = self.app.get('/create_book')
 
-#         # Check that page contains all of the things we expect
-#         response_text = response.get_data(as_text=True)
-#         self.assertIn('To Kill a Mockingbird', response_text)
-#         self.assertIn('The Bell Jar', response_text)
-#         self.assertIn('me1', response_text)
-#         self.assertIn('Log In', response_text)
-#         self.assertIn('Sign Up', response_text)
+#         # Make sure that the user was redirecte to the login page
+#         self.assertEqual(response.status_code, 302)
+#         self.assertIn('/login?next=%2Fcreate_book', response.location)
 
-#         # Check that the page doesn't contain things we don't expect
-#         # (these should be shown only to logged in users)
-#         self.assertNotIn('Create Book', response_text)
-#         self.assertNotIn('Create Author', response_text)
-#         self.assertNotIn('Create Genre', response_text)
+#     def test_create_author(self):
+#         """Test creating an author."""
+#         # Make a POST request to the /create_author route
 
-#     def test_homepage_logged_in(self):
-#         """Test that the books show up on the homepage."""
 #         # Set up
 #         create_books()
 #         create_user()
 #         login(self.app, 'me1', 'password')
 
-#         # Make a GET request
-#         response = self.app.get('/', follow_redirects=True)
+#         # Make POST request with data
+#         post_data = {
+#             'name': "Mark Twain",
+#             'biography': 'Mark Twain wrote some book'
+#         }
+#         self.app.post('/create_author', data=post_data)
+
+#         # Verify that the author was updated in the database
+#         created_author = Author.query.filter_by(name='Mark Twain').one()
+#         self.assertIsNotNone(created_author)
+#         self.assertEqual(created_author.biography,
+#                          'Mark Twain wrote some book')
+
+#     def test_create_genre(self):
+#         # Make a POST request to the /create_genre route,
+#         # Set up
+#         create_books()
+#         create_user()
+#         login(self.app, 'me1', 'password')
+
+#         # Make POST request with data
+#         post_data = {'name': "Non Fiction"}
+#         self.app.post('/create_genre', data=post_data)
+
+#         # Verify that the genre was updated in the database
+#         created_genre = Genre.query.filter_by(name='Non Fiction').one()
+#         self.assertIsNotNone(created_genre)
+
+#     def test_profile_page(self):
+#         # Make a GET request to the /profile/me1 route
+#         create_user()
+#         login(self.app, 'me1', 'password')
+#         response = self.app.get('/profile/me1')
+
 #         self.assertEqual(response.status_code, 200)
-
-#         # Check that page contains all of the things we expect
 #         response_text = response.get_data(as_text=True)
-#         self.assertIn('To Kill a Mockingbird', response_text)
-#         self.assertIn('The Bell Jar', response_text)
-#         self.assertIn('me1', response_text)
-#         self.assertIn('Create Book', response_text)
-#         self.assertIn('Create Author', response_text)
-#         self.assertIn('Create Genre', response_text)
 
-#         # Check that the page doesn't contain things we don't expect
-#         # (these should be shown only to logged out users)
-#         self.assertNotIn('Log In', response_text)
-#         self.assertNotIn('Sign Up', response_text)
-
+#         # Verify that the response shows the appropriate user info
+#         self.assertIn('You are logged in as me1', response_text)
 #     def test_book_detail_logged_out(self):
 #         """Test that the book appears on its detail page."""
 #         # Use helper functions to create books, authors, user
@@ -186,93 +223,6 @@ def logout(client):
 #         self.assertEqual(book.title, 'Tequila Mockingbird')
 #         self.assertEqual(book.publish_date, date(1960, 7, 12))
 #         self.assertEqual(book.audience, Audience.CHILDREN)
-
-#     def test_create_book(self):
-#         """Test creating a book."""
-#         # Set up
-#         create_books()
-#         create_user()
-#         login(self.app, 'me1', 'password')
-
-#         # Make POST request with data
-#         post_data = {
-#             'title': 'Go Set a Watchman',
-#             'publish_date': '2015-07-14',
-#             'author': 1,
-#             'audience': 'ADULT',
-#             'genres': []
-#         }
-#         self.app.post('/create_book', data=post_data)
-
-#         # Make sure book was updated as we'd expect
-#         created_book = Book.query.filter_by(title='Go Set a Watchman').one()
-#         self.assertIsNotNone(created_book)
-#         self.assertEqual(created_book.author.name, 'Harper Lee')
-
-#     def test_create_book_logged_out(self):
-#         """
-#         Test that the user is redirected when trying to access the create book
-#         route if not logged in.
-#         """
-#         # Set up
-#         create_books()
-#         create_user()
-
-#         # Make GET request
-#         response = self.app.get('/create_book')
-
-#         # Make sure that the user was redirecte to the login page
-#         self.assertEqual(response.status_code, 302)
-#         self.assertIn('/login?next=%2Fcreate_book', response.location)
-
-#     def test_create_author(self):
-#         """Test creating an author."""
-#         # Make a POST request to the /create_author route
-
-#         # Set up
-#         create_books()
-#         create_user()
-#         login(self.app, 'me1', 'password')
-
-#         # Make POST request with data
-#         post_data = {
-#             'name': "Mark Twain",
-#             'biography': 'Mark Twain wrote some book'
-#         }
-#         self.app.post('/create_author', data=post_data)
-
-#         # Verify that the author was updated in the database
-#         created_author = Author.query.filter_by(name='Mark Twain').one()
-#         self.assertIsNotNone(created_author)
-#         self.assertEqual(created_author.biography,
-#                          'Mark Twain wrote some book')
-
-#     def test_create_genre(self):
-#         # Make a POST request to the /create_genre route,
-#         # Set up
-#         create_books()
-#         create_user()
-#         login(self.app, 'me1', 'password')
-
-#         # Make POST request with data
-#         post_data = {'name': "Non Fiction"}
-#         self.app.post('/create_genre', data=post_data)
-
-#         # Verify that the genre was updated in the database
-#         created_genre = Genre.query.filter_by(name='Non Fiction').one()
-#         self.assertIsNotNone(created_genre)
-
-#     def test_profile_page(self):
-#         # Make a GET request to the /profile/me1 route
-#         create_user()
-#         login(self.app, 'me1', 'password')
-#         response = self.app.get('/profile/me1')
-
-#         self.assertEqual(response.status_code, 200)
-#         response_text = response.get_data(as_text=True)
-
-#         # Verify that the response shows the appropriate user info
-#         self.assertIn('You are logged in as me1', response_text)
 
 #     def test_favorite_book(self):
 #         # Login as the user me1
