@@ -27,14 +27,9 @@
     margin: 10px auto;
     max-width: 300px;
     word-wrap: break-word;
-    text-align: left;
+    text-align: center;
 }
 
 .fs-6 {
     font-size: 0.2em;
-}
-
-.test {
-    color: green;
-    background-color:rgb(238, 77, 77);
 }

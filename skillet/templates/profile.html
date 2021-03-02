@@ -21,24 +21,26 @@
         </div>
         <div class="row mt-4">
             {% for meal in user.meals %}
-            <div class="card m-3 pt-2" style="width: 18rem;">
-                <img src="{{meal.img_url}}" class="card-img-top" alt="{{meal.name}}">
-                <div class="card-body">
-                    <p class="fs-5">{{meal.name.title()}}</p>
-                    <p class="card-text">{{meal.description}}</p>
-                    <p class="card-text">{{meal.date_prepared.strftime("%m/%d/%Y, %H:%M:%S")}}</p>
+            <a href="/view_meal/{{meal.id}}">
+                <div class="card m-3 pt-2" style="width: 18rem;">
+                    <img src="{{meal.img_url}}" class="card-img-top" alt="{{meal.name}}">
+                    <div class="card-body">
+                        <p class="fs-5">{{meal.name.title()}}</p>
+                        <p class="card-text">{{meal.description}}</p>
+                        <p class="card-text">{{meal.date_prepared.strftime("%m/%d/%Y, %H:%M:%S")}}</p>
 
-                    {% if current_user.id == meal.created_by_id %}
-                    <div>
-                        <a href="/edit_meal/{{meal.id}}">
-                            <div class="btn btn-warning">Edit Meal</div>
-                        </a>
+                        {% if current_user.id == meal.created_by_id %}
+                        <div>
+                            <a href="/edit_meal/{{meal.id}}">
+                                <div class="btn btn-warning">Edit Meal</div>
+                            </a>
+                        </div>
+                        {% endif %}
+
                     </div>
-                    {% endif %}
 
                 </div>
-
-            </div>
+            </a>
             {% endfor %}
         </div>
     </div>
