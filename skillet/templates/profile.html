@@ -29,14 +29,6 @@
                         <p class="card-text">{{meal.description}}</p>
                         <p class="card-text">{{meal.date_prepared.strftime("%m/%d/%Y, %H:%M:%S")}}</p>
 
-                        {% if current_user.id == meal.created_by_id %}
-                        <div>
-                            <a href="/edit_meal/{{meal.id}}">
-                                <div class="btn btn-warning">Edit Meal</div>
-                            </a>
-                        </div>
-                        {% endif %}
-
                     </div>
 
                 </div>
@@ -56,22 +48,16 @@
         </div>
         <div class="row mt-4">
             {% for recipe in user.recipes %}
-            <div class="card border-dark mb-3 mx-3" style="max-width: 18rem;">
-                <div class="card-header">{{recipe.name}}</div>
-                <div class="card-body text-dark">
-                    <p class="card-text">{{recipe.description}}</p>
-                    <p class="card-text">{{recipe.instructions[0:80]}}...r</p>
-                    <p class="card-text">{{recipe.ingredients[0:80]}}...</p>
+            <a href="/view_recipe/{{recipe.id}}">
+                <div class="card border-dark mb-3 mx-3" style="max-width: 18rem;">
+                    <div class="card-header">{{recipe.name}}</div>
+                    <div class="card-body text-dark">
+                        <p class="card-text">{{recipe.description}}</p>
+                        <p class="card-text">{{recipe.instructions[0:80]}}...r</p>
+                        <p class="card-text">{{recipe.ingredients[0:80]}}...</p>
+                    </div>
                 </div>
-
-                {% if current_user.id == recipe.created_by_id %}
-                <div class="mx-3 mb-3">
-                    <a href="/edit_recipe/{{recipe.id}}">
-                        <div class="btn btn-warning">Edit Recipe</div>
-                    </a>
-                </div>
-                {% endif %}
-            </div>
+            </a>
             {% endfor %}
         </div>
     </div>

@@ -2,7 +2,7 @@ from datetime import datetime
 from skillet import app, db
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from skillet.post.forms import MealForm, RecipeForm
-from skillet.models import Meal, Recipe
+from skillet.models import Meal, Recipe, User
 from flask_login import current_user, login_required
 from skillet.post.utils import update_user_activity
 
@@ -76,9 +76,10 @@ def edit_recipe(id):
 @post.route('/view_recipe/<id>')
 def view_recipe(id):
     """Gets the recipe detail page"""
-    recipe = db.Recipe.query_by(id=id)
+    recipe = Recipe.query.get(id)
+    author = User.query.get(recipe.created_by_id)
 
-    return render_template('recipe_detail.html', recipe=recipe)
+    return render_template('recipe_detail.html', recipe=recipe, author=author)
 
 
 ##########################################
@@ -131,8 +132,7 @@ def edit_meal(id):
         meal.description = form.description.data
         meal.img_url = str(form.img_url.data)
         meal.date_prepared = datetime.now()
-
-        print("MEAL UPDATED")
+        meal.recipes = form.recipes.data
 
         db.session.commit()
 
@@ -165,5 +165,6 @@ def delete_meal(id):
 def view_meal(id):
     """Gets the meal detail page"""
     meal = Meal.query.get(id)
+    author = User.query.get(meal.created_by_id)
 
-    return render_template('meal_detail.html', meal=meal)
+    return render_template('meal_detail.html', meal=meal, author=author)

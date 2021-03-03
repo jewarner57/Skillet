@@ -1,6 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Meal Detail</h1>
+<section class="p-5 d-flex">
+    <img src="{{meal.img_url}}" />
+    <div class="mx-4">
+        <h1>Meal Detail</h1>
+        <p>Name: {{meal.name}}</p>
+        <p>Description: {{meal.description}}</p>
+        <p>Date Prepared: {{meal.date_prepared.strftime("%m/%d/%Y, %H:%M:%S")}}</p>
+        <p>Created By: <a href="/profile/{{author.id}}">{{author.username.title()}}</a></p>
+        <div>
+            <p>Recipes:</p>
+            <ul>
+                {% for recipe in meal.recipes %}
+                <a href="/view_recipe/{{recipe.id}}">{{recipe.name}}</a>
+                {% endfor %}
+            </ul>
+        </div>
+        {% if current_user.id == meal.created_by_id %}
+        <div class="mt-5">
+            <a href="/edit_meal/{{meal.id}}">
+                <div class="btn btn-warning">Edit Meal</div>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
 
 {% endblock content %}
