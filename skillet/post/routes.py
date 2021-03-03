@@ -132,6 +132,8 @@ def edit_meal(id):
         meal.img_url = str(form.img_url.data)
         meal.date_prepared = datetime.now()
 
+        print("MEAL UPDATED")
+
         db.session.commit()
 
         flash('Meal Updated.')

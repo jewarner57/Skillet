@@ -1,4 +1,3 @@
-from enum import unique
 from sqlalchemy_utils import URLType
 from flask_login import UserMixin
 from skillet import db, login_manager
