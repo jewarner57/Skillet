@@ -4,11 +4,10 @@
 <section class="p-5 d-flex">
     <img src="{{meal.img_url}}" />
     <div class="mx-4">
-        <h1>Meal Detail</h1>
-        <p>Name: {{meal.name}}</p>
+        <p class="fs-4">{{meal.name.title()}}</p>
         <p>Description: {{meal.description}}</p>
         <p>Date Prepared: {{meal.date_prepared.strftime("%m/%d/%Y, %H:%M:%S")}}</p>
-        <p>Created By: <a href="/profile/{{author.id}}">{{author.username.title()}}</a></p>
+        <p>Prepared By: <a href="/profile/{{meal.created_by.id}}">{{meal.created_by.username.title()}}</a></p>
         <div>
             <p>Recipes:</p>
             <ul>

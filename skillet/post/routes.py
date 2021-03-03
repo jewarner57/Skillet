@@ -37,7 +37,6 @@ def create_recipe():
         db.session.add(user)
         db.session.commit()
 
-        flash('Recipe Created.')
         return redirect(url_for('auth.profile', id=current_user.id))
 
     print(form.errors)
@@ -64,9 +63,7 @@ def edit_recipe(id):
         recipe.instructions = form.instructions.data
 
         db.session.commit()
-
-        flash('Recipe Updated.')
-        return redirect(url_for('auth.profile', id=current_user.id))
+        return redirect(url_for('post.view_recipe', id=recipe.id))
 
     print(form.errors)
 
@@ -77,9 +74,8 @@ def edit_recipe(id):
 def view_recipe(id):
     """Gets the recipe detail page"""
     recipe = Recipe.query.get(id)
-    author = User.query.get(recipe.created_by_id)
 
-    return render_template('recipe_detail.html', recipe=recipe, author=author)
+    return render_template('recipe_detail.html', recipe=recipe)
 
 
 ##########################################
@@ -109,7 +105,6 @@ def create_meal():
         db.session.add(user)
         db.session.commit()
 
-        flash('Meal Created.')
         return redirect(url_for('post.view_meal', id=meal.id))
 
     print(form.errors)
@@ -136,7 +131,6 @@ def edit_meal(id):
 
         db.session.commit()
 
-        flash('Meal Updated.')
         return redirect(url_for('post.view_meal', id=meal.id))
 
     print(form.errors)
@@ -155,7 +149,6 @@ def delete_meal(id):
 
         db.session.delete(meal)
         db.session.commit()
-        flash("Meal Deleted")
 
     return redirect(url_for('auth.profile', id=current_user.id))
 
@@ -165,6 +158,5 @@ def delete_meal(id):
 def view_meal(id):
     """Gets the meal detail page"""
     meal = Meal.query.get(id)
-    author = User.query.get(meal.created_by_id)
 
-    return render_template('meal_detail.html', meal=meal, author=author)
+    return render_template('meal_detail.html', meal=meal)

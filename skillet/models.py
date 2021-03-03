@@ -26,6 +26,7 @@ class Meal(db.Model):
     img_url = db.Column(db.String(150), nullable=False)
 
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    created_by = db.relationship('User')
 
     recipes = db.relationship(
         'Recipe', secondary="meal_recipes", back_populates='meals')
@@ -40,6 +41,7 @@ class Recipe(db.Model):
     instructions = db.Column(db.String(300), nullable=False)
 
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    created_by = db.relationship('User')
 
     meals = db.relationship(
         'Meal', secondary='meal_recipes', back_populates="recipes")

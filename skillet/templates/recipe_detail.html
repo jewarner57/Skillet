@@ -1,14 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Recipe Detail</h1>
+<section class="p-5 d-flex">
+    <div class="mx-4">
+        <p class="fs-4">{{recipe.name.title()}}</p>
+        <p>Description: {{recipe.description}}</p>
+        <p>Ingredients: {{recipe.ingredients}}</p>
 
-{% if current_user.id == recipe.created_by_id %}
-<div class="mx-3 mb-3">
-    <a href="/edit_recipe/{{recipe.id}}">
-        <div class="btn btn-warning">Edit Recipe</div>
-    </a>
-</div>
-{% endif %}
+        <p class="mt-5">Created By:
+            <a href="/profile/{{recipe.created_by.id}}">{{recipe.created_by.username.title()}}</a>
+        </p>
+        <div>
+            <p>Meals made with this recipe:</p>
+            <ul>
+                {% for meal in recipe.meals %}
+                <a href="/view_meal/{{meal.id}}">{{meal.name}}</a>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% if current_user.id == recipe.created_by_id %}
+        <div class="mt-5">
+            <a href="/edit_recipe/{{recipe.id}}">
+                <div class="btn btn-warning">Edit Recipe</div>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+
 
 {% endblock content %}

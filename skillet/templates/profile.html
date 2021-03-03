@@ -19,20 +19,20 @@
                 <div class="btn btn-primary col"> Create Meal </div>
             </a>
         </div>
-        <div class="row mt-4">
+        <div class="row mt-4 col-12">
             {% for meal in user.meals %}
-            <a href="/view_meal/{{meal.id}}">
-                <div class="card m-3 pt-2" style="width: 18rem;">
+
+            <div class="card m-3 pt-2" style="width: 18rem;">
+                <a href="/view_meal/{{meal.id}}" class="card-link">
                     <img src="{{meal.img_url}}" class="card-img-top" alt="{{meal.name}}">
-                    <div class="card-body">
+                    <div class="card-body text-dark">
                         <p class="fs-5">{{meal.name.title()}}</p>
                         <p class="card-text">{{meal.description}}</p>
                         <p class="card-text">{{meal.date_prepared.strftime("%m/%d/%Y, %H:%M:%S")}}</p>
 
                     </div>
-
-                </div>
-            </a>
+                </a>
+            </div>
             {% endfor %}
         </div>
     </div>
@@ -46,18 +46,20 @@
                 <div class="btn btn-primary col"> Create Recipe </div>
             </a>
         </div>
-        <div class="row mt-4">
+        <div class="row mt-4 col-12">
             {% for recipe in user.recipes %}
-            <a href="/view_recipe/{{recipe.id}}">
-                <div class="card border-dark mb-3 mx-3" style="max-width: 18rem;">
+
+            <div class="card border-dark mb-3 mx-3" style="max-width: 18rem;">
+                <a href="/view_recipe/{{recipe.id}}" class="card-link">
                     <div class="card-header">{{recipe.name}}</div>
                     <div class="card-body text-dark">
                         <p class="card-text">{{recipe.description}}</p>
                         <p class="card-text">{{recipe.instructions[0:80]}}...r</p>
                         <p class="card-text">{{recipe.ingredients[0:80]}}...</p>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
+
             {% endfor %}
         </div>
     </div>
