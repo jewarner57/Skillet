@@ -1,7 +1,7 @@
 from enum import unique
 from sqlalchemy_utils import URLType
 from flask_login import UserMixin
-from skillet import db
+from skillet import db, login_manager
 
 
 class User(UserMixin, db.Model):
@@ -55,3 +55,8 @@ meal_recipes_table = db.Table('meal_recipes',
                               db.Column('recipe_id', db.Integer,
                                         db.ForeignKey('recipe.id'))
                               )
+
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(id)
