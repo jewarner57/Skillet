@@ -5,6 +5,7 @@
 * Skillet is an app for cooks of all kinds, beginner or veteran to keep track of what they've made, when they made it, and what recipe they used.
 * Save your recipes and show off what you've cooked to other users.
 
+![Skillet](/skillet/static/readme-preview.png)
 
 ### How to run?
 * clone the repo
@@ -14,3 +15,4 @@
 
 ### How to run tests?
 * Run: ```python -m unittest discover```
+
