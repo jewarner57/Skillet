@@ -21,9 +21,9 @@ class Meal(db.Model):
     __tablename__ = 'meal'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
-    description = db.Column(db.String(100), nullable=True)
+    description = db.Column(db.String(300), nullable=True)
     date_prepared = db.Column(db.DateTime, nullable=False)
-    img_url = db.Column(db.String(150), nullable=False)
+    img_url = db.Column(db.String(300), nullable=False)
 
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     created_by = db.relationship('User')

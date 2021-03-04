@@ -12,9 +12,11 @@ from datetime import datetime
 
 class MealForm(FlaskForm):
     """Form for creating a new meal"""
-    name = StringField('Name', validators=[Length(min=3, max=50)])
-    img_url = StringField('Image Url', validators=[DataRequired(), URL()])
-    description = StringField('Description', validators=[DataRequired()])
+    name = StringField('Name', validators=[Length(min=3, max=80)])
+    img_url = StringField('Image Url', validators=[
+                          DataRequired(), URL(), Length(min=3, max=300)])
+    description = StringField('Description', validators=[
+                              DataRequired(), Length(min=3, max=300)])
     recipes = QuerySelectMultipleField(
         'Recipe', query_factory=lambda: Recipe.query)
 
@@ -23,7 +25,7 @@ class MealForm(FlaskForm):
 
 class RecipeForm(FlaskForm):
     """Form for creating a new recipe"""
-    name = StringField('Name', validators=[Length(min=3, max=50)])
+    name = StringField('Name', validators=[Length(min=3, max=80)])
 
     description = TextAreaField(
         'Description', validators=[DataRequired(), Length(min=1, max=300)])
