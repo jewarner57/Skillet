@@ -12,7 +12,7 @@
             <p>Recipes:</p>
             <ul>
                 {% for recipe in meal.recipes %}
-                <a href="/view_recipe/{{recipe.id}}">{{recipe.name}}</a>
+                <li><a href="/view_recipe/{{recipe.id}}">{{recipe.name}}</a></li>
                 {% endfor %}
             </ul>
         </div>

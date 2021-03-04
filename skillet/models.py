@@ -37,8 +37,8 @@ class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     description = db.Column(db.String(300), nullable=False)
-    ingredients = db.Column(db.String(300), nullable=False)
-    instructions = db.Column(db.String(300), nullable=False)
+    ingredients = db.Column(db.String(600), nullable=False)
+    instructions = db.Column(db.String(600), nullable=False)
 
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     created_by = db.relationship('User')

@@ -67,9 +67,17 @@
     position: absolute;
     top:58px;
     right: 0%;
-
 }
 
 .hero-text {
     margin-top: 300px;
+}
+
+.recipe-info-container {
+    border: 2px solid rgb(102, 102, 102);
+    padding: 20px;
+}
+
+.text-prewrap {
+    white-space: pre-wrap;
 }

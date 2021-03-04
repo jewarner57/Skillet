@@ -49,8 +49,6 @@ def create_recipe():
 def edit_recipe(id):
     """Gets the edit_recipe page"""
     recipe = Recipe.query.get(id)
-    print(recipe)
-    print("what the fuck")
     form = RecipeForm(obj=recipe)
 
     if form.validate_on_submit() and current_user.id == recipe.created_by_id:

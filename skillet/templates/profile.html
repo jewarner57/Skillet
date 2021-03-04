@@ -28,8 +28,7 @@
                     <div class="card-body text-dark">
                         <p class="fs-5">{{meal.name.title()}}</p>
                         <p class="card-text">{{meal.description}}</p>
-                        <p class="card-text">{{meal.date_prepared.strftime("%m/%d/%Y, %H:%M:%S")}}</p>
-
+                        <p class="card-text">Prepared: {{meal.date_prepared.strftime("%m/%d/%Y")}}</p>
                     </div>
                 </a>
             </div>

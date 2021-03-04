@@ -3,22 +3,24 @@
 
 <section class="p-5 d-flex">
     <div class="mx-4">
-        <p class="fs-4">{{recipe.name.title()}}</p>
-        <p>Description: {{recipe.description}}</p>
-        <p>Ingredients: {{recipe.ingredients}}</p>
+        <div class="recipe-info-container">
+            <p class="fs-4">{{recipe.name.title()}}</p>
+            <p class="text-prewrap"><strong>Description:</strong> {{recipe.description}}</p>
+            <p class="text-prewrap"><strong>Ingredients:</strong> {{recipe.ingredients}}</p>
+            <p class="text-prewrap"><strong>Instructions:</strong> {{recipe.instructions}}</p>
 
-        <p class="mt-5">Created By:
-            <a href="/profile/{{recipe.created_by.id}}">{{recipe.created_by.username.title()}}</a>
-        </p>
-        <div>
-            <p>Meals made with this recipe:</p>
-            <ul>
-                {% for meal in recipe.meals %}
-                <a href="/view_meal/{{meal.id}}">{{meal.name}}</a>
-                {% endfor %}
-            </ul>
+            <p class="mt-5">Created By:
+                <a href="/profile/{{recipe.created_by.id}}">{{recipe.created_by.username.title()}}</a>
+            </p>
+            <div>
+                <p>Meals made with this recipe:</p>
+                <ul>
+                    {% for meal in recipe.meals %}
+                    <li><a href="/view_meal/{{meal.id}}">{{meal.name}}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-
         {% if current_user.id == recipe.created_by_id %}
         <div class="mt-5">
             <a href="/edit_recipe/{{recipe.id}}">
