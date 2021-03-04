@@ -37,7 +37,7 @@ def create_recipe():
         db.session.add(user)
         db.session.commit()
 
-        return redirect(url_for('auth.profile', id=current_user.id))
+        return redirect(url_for('post.view_recipe', id=recipe.id))
 
     print(form.errors)
 
@@ -94,6 +94,7 @@ def create_meal():
             name=form.name.data,
             description=form.description.data,
             img_url=form.img_url.data,
+            recipes=form.recipes.data,
             date_prepared=datetime.now()
         )
 
