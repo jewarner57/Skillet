@@ -8,6 +8,7 @@ from wtforms.fields.core import FloatField
 from wtforms.validators import DataRequired, Length, URL, ValidationError
 from skillet import bcrypt
 from datetime import datetime
+from flask_login import current_user
 
 
 class MealForm(FlaskForm):
@@ -18,7 +19,7 @@ class MealForm(FlaskForm):
     description = StringField('Description', validators=[
                               DataRequired(), Length(min=3, max=300)])
     recipes = QuerySelectMultipleField(
-        'Recipe', query_factory=lambda: Recipe.query)
+        'Recipe', query_factory=lambda: Recipe.query.filter_by(created_by_id=current_user.id))
 
     submit = SubmitField('Submit')
 
